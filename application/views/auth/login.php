@@ -7,12 +7,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body class="bg-secondary bg-opacity-25">
 
 <div class="container my-5 py-5">
     <div class="row justify-content-center">
         <div class="col-md-5 col-lg-4">
-            <div class="card shadow-lg border-0 rounded-3">
+            <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header bg-danger text-white text-center py-3">
                     <h4 class="mb-0 fw-bold"><i class="bi bi-hospital me-2"></i>HMS Portal</h4>
                     <small>Sign in to your account</small>
