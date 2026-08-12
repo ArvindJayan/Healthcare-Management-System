@@ -34,7 +34,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-white shadow sticky-top">
 		<div class="container">
 			<a class="navbar-brand d-flex align-items-center fw-bold text-danger" href="<?= base_url(); ?>">
-				<i class="bi bi-hospital fs-2 me-2"></i> Hospital Management System
+				<i class="bi bi-hospital fs-2 me-2"></i> Healthcare Management System
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
 				<span class="navbar-toggler-icon"></span>
@@ -109,7 +109,7 @@
 
 	<footer class="bg-danger text-white py-4 border-top">
 		<div class="container text-center">
-			<p class="mb-0 text-white">&copy; <?= date('Y'); ?> Hospital Management System. All rights reserved.</p>
+			<p class="mb-0 text-white">&copy; <?= date('Y'); ?> Healthcare Management System. All rights reserved.</p>
 		</div>
 	</footer>
 
