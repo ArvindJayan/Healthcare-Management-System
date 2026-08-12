@@ -9,7 +9,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 	<style>
 		.hero-section {
-			background: linear-gradient(135deg, #eb4040 0%, #f87a99 100%);
+			background: linear-gradient(135deg, #eb4040 0%, #f87a7a 100%);
 			color: white;
 			padding: 100px 0;
 		}
@@ -40,7 +40,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<a href="<?= site_url('auth/login'); ?>" class="btn btn-danger fw-bold ms-auto">Login</a>
+				<a href="<?= site_url('auth/login'); ?>" class="btn btn-danger fw-bold ms-auto">Get Started</a>
 			</div>
 		</div>
 	</nav>
@@ -51,7 +51,7 @@
 				<div class="col-lg-6 mb-4 mb-lg-0">
 					<h1 class="display-4 fw-bold mb-3">Healthcare Management Made Simple & Efficient</h1>
 					<p class="lead mb-4">Streamline patient registration, doctor scheduling, and medical records in one secure, unified platform.</p>
-					<div class="d-flex flex-column flex-sm-row gap-3">
+					<div class="d-flex flex-column flex-sm-row gap-3 mb-5">
 						<a href="<?= site_url('auth/login'); ?>" class="btn btn-light btn-lg text-danger fw-semibold">
 							Access Portal <i class="bi bi-arrow-right ms-1"></i>
 						</a>
@@ -65,7 +65,7 @@
 		</div>
 	</section>
 
-	<section id="features" class="py-5 bg-light">
+	<section id="features" class="py-3 bg-light">
 		<div class="container py-4">
 			<div class="text-center mb-5">
 				<h2 class="fw-bold text-danger">Key Modules</h2>
@@ -107,7 +107,7 @@
 		</div>
 	</section>
 
-	<footer class="bg-dark text-white py-4 border-top">
+	<footer class="bg-danger text-white py-4 border-top">
 		<div class="container text-center">
 			<p class="mb-0 text-white">&copy; <?= date('Y'); ?> Hospital Management System. All rights reserved.</p>
 		</div>
