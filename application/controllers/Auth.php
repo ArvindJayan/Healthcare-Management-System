@@ -5,8 +5,10 @@ class Auth extends CI_Controller {
 
     public $session;
     public $input;
+    public $db;
 
-    public $User_model; 
+    public $User_model;
+
 
     public function __construct() {
         parent::__construct();
@@ -48,6 +50,11 @@ class Auth extends CI_Controller {
     public function logout() {
         $this->session->sess_destroy();
         redirect('/');
+    }
+
+    public function register_user($data) {
+        $data['password'] = passsword_hash($data['password'], PASSWORD_BCRYPT);
+        return $this->db->insert('users', $data);
     }
 }
 ?>

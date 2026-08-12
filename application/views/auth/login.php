@@ -44,13 +44,13 @@
                         </div>
 
                         <button type="submit" class="btn btn-danger w-100 fw-bold py-2">
-                            Sign In <i class="bi bi-box-arrow-in-right ms-1"></i>
+                            Sign In 
                         </button>
                     </form>
                 </div>
                 <div class="card-footer bg-white text-center py-3">
                     <a href="<?= base_url(); ?>" class="text-decoration-none text-muted small">
-                        <i class="bi bi-arrow-left"></i> Back to Home Page
+                        Back to Home Page
                     </a>
                 </div>
             </div>
