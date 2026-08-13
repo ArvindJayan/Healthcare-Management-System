@@ -46,8 +46,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="<?= site_url('/auth/logout'); ?>" class="btn btn-outline-light btn-sm fw-semibold">
-                            <i class="bi bi-box-arrow-right me-1"></i> Logout
+                        <a href="<?= site_url('/auth/logout'); ?>" class="btn btn-light text-danger fw-semibold">
+                            Logout
                         </a>
                     </li>
                 </ul>
@@ -59,7 +59,7 @@
 
         <div class="row mb-5">
             <div class="col">
-                <div class="p-4 bg-white rounded-3 shadow-sm border-start border-4 border-danger">
+                <div class="p-4 bg-white rounded-3 shadow border-start border-4 border-danger">
                     <h2 class="fw-bold text-danger mb-1">Welcome back, <?= html_escape($name ?? 'User'); ?>!</h2>
                     <p class="text-muted mb-0">Select a module below to get started.</p>
                 </div>
@@ -69,7 +69,7 @@
         <div class="row g-4">
 
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm action-card p-2">
+                <div class="card h-100 shadow action-card p-2">
                     <div class="card-body text-center p-4">
                         <div class="rounded-circle bg-red-subtle text-danger d-inline-flex p-3 mb-3">
                             <i class="bi bi-people-fill fs-1"></i>
@@ -84,7 +84,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm action-card p-2">
+                <div class="card h-100 shadow action-card p-2">
                     <div class="card-body text-center p-4">
                         <div class="rounded-circle bg-red-subtle text-danger d-inline-flex p-3 mb-3">
                             <i class="bi bi-person-badge-fill fs-1"></i>
@@ -99,7 +99,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm action-card p-2">
+                <div class="card h-100 shadow action-card p-2">
                     <div class="card-body text-center p-4">
                         <div class="rounded-circle bg-red-subtle text-danger d-inline-flex p-3 mb-3">
                             <i class="bi bi-calendar-check-fill fs-1"></i>

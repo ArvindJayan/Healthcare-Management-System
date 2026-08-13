@@ -49,7 +49,7 @@
                             <label class="form-label fw-semibold text-dark">Specialization</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-white"><i class="bi bi-award text-danger"></i></span>
-                                <input type="text" name="specialization" class="form-control" placeholder="Enter your specialization" value="<?= set_value('specialization'); ?>" required>
+                                <input type="text" name="specialization" class="form-control focus-ring focus-ring-danger" placeholder="Enter your specialization" value="<?= set_value('specialization'); ?>" required>
                             </div>
                             <div class="form-text">Specify your primary medical field.</div>
                         </div>
@@ -58,7 +58,7 @@
                             <label class="form-label fw-semibold text-dark">Consultation Fee (₹ INR)</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-white fw-bold text-danger">₹</span>
-                                <input type="number" step="0.01" min="0" name="fee" class="form-control" placeholder="Enter the amount" value="<?= set_value('fee'); ?>" required>
+                                <input type="number" step="0.01" min="0" name="fee" class="form-control focus-ring focus-ring-danger" placeholder="Enter the amount" value="<?= set_value('fee'); ?>" required>
                             </div>
                         </div>
 

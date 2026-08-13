@@ -14,7 +14,7 @@
     <span class="navbar-brand fw-bold mb-0 h1">
       <i class="bi bi-hospital me-2"></i>HMS Portal
     </span>
-    <a class="btn btn-outline-light btn-sm" href="<?= site_url('/auth/logout'); ?>">Logout</a>
+    <a class="btn btn-light text-danger" href="<?= site_url('/auth/logout'); ?>">Logout</a>
   </div>
 </nav>
 
@@ -49,7 +49,7 @@
                             <label class="form-label fw-semibold text-dark">Phone Number</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-white"><i class="bi bi-telephone text-danger"></i></span>
-                                <input type="tel" name="phone" class="form-control focus-ring focus-ring-danger" placeholder="Enter your phone number" value="<?= set_value('phone'); ?>" required>
+                                <input type="tel" name="phone" maxlength=10 class="form-control focus-ring focus-ring-danger" placeholder="Enter your phone number" value="<?= set_value('phone'); ?>" required>
                             </div>
                         </div>
 
