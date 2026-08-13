@@ -45,7 +45,7 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('role_id', 'Role', 'required|numeric');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
-        $this->form_validation->set_rules('conform_password', 'Confirm Password', 'required|matches[password]');
+        $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
 
         if ($this->form_validation->run() == FALSE) {
             $data['roles'] = $this->User_model->get_non_admin_roles();
@@ -53,7 +53,7 @@ class Auth extends CI_Controller {
         } else {
             $selected_role_id = (int)$this->input->post('role_id', TRUE);
 
-            if (selected_role === 1) {
+            if ($selected_role_id === 1) {
                 $this->session->set_flashdata('error', 'Admin registration is restricted.');
                 redirect('auth/register');
                 return;
@@ -62,7 +62,7 @@ class Auth extends CI_Controller {
             $user_data = array(
                 'name' => $this->input->post('name', TRUE),
                 'email' => $this->input->post('email', TRUE),
-                'role' => $selected_role_id,
+                'role_id' => $selected_role_id,
                 'password' => $this->input->post('password', TRUE)
             );
 

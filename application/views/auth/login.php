@@ -49,8 +49,9 @@
                     </form>
                 </div>
                 <div class="card-footer bg-white text-center py-3">
-                    <a href="<?= base_url(); ?>" class="text-decoration-none text-muted small">
-                        Back to Home Page
+                    <span class="small text-muted">Don't have an account?</span>
+                    <a href="<?= site_url('/auth/register'); ?>" class="text-danger fw-semibold small text-decoration-none ms-1">
+                        Register
                     </a>
                 </div>
             </div>
