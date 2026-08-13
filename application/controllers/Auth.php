@@ -7,11 +7,13 @@ class Auth extends CI_Controller {
         parent::__construct();
         $this->load->model('User_model');
         $this->load->library('session');
+        $this->load->library('form_validation');
     }
 
     public function login() {
         if ($this->session->userdata('is_authenticated')) {
-            redirect('/dashboard');
+            $this->_redirect_authenticated_user();
+            return;
         }
 
         if ( ! $this->input->post()) {
@@ -19,46 +21,34 @@ class Auth extends CI_Controller {
             return;
         }
 
-        $email = $this->input->post('email', TRUE);
+        $email    = $this->input->post('email', TRUE);
         $password = $this->input->post('password', TRUE);
-        $user = $this->User_model->login($email, $password);
+        $user     = $this->User_model->login($email, $password);
 
         if ($user) {
             $session_data = array(
-                'user_id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role_id' => $user->role_id,
-                'role_name' => $user->role_name,
+                'user_id'          => $user->id,
+                'name'             => $user->name,
+                'email'            => $user->email,
+                'role_id'          => $user->role_id,
+                'role_name'        => $user->role_name,
                 'is_authenticated' => TRUE
             );
             $this->session->set_userdata($session_data);
-            
-            $this->load->model('Doctor_model');
-            $this->load->model('Patient_model');
 
-            if ($user->role_id == 1) { 
-                redirect('/dashboard');
-            } else if ($user->role_id == 2) { 
-                if ($this->Doctor_model->profile_exists($user->id)) {
-                    redirect('/dashboard');
-                } else {
-                    redirect('/onboarding');
-                }
-            } else if ($user->role_id == 3) { 
-                if ($this->Patient_model->profile_exists($user->id)) {
-                    redirect('/dashboard');
-                } else {
-                    redirect('/onboarding');
-                }
+            $this->_redirect_authenticated_user();
         } else {
             $this->session->set_flashdata('error', 'Invalid username or password.');
-            redirect('/auth/login');
-            }
+            redirect('auth/login');
         }
     }
 
     public function register() {
+        if ($this->session->userdata('is_authenticated')) {
+            $this->_redirect_authenticated_user();
+            return;
+        }
+
         $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email|is_unique[users.email]');
         $this->form_validation->set_rules('role_id', 'Role', 'required|numeric');
@@ -78,9 +68,9 @@ class Auth extends CI_Controller {
             }
 
             $user_data = array(
-                'name' => $this->input->post('name', TRUE),
-                'email' => $this->input->post('email', TRUE),
-                'role_id' => $selected_role_id,
+                'name'     => $this->input->post('name', TRUE),
+                'email'    => $this->input->post('email', TRUE),
+                'role_id'  => $selected_role_id,
                 'password' => $this->input->post('password', TRUE)
             );
 
@@ -90,18 +80,18 @@ class Auth extends CI_Controller {
                 $registered_user = $this->User_model->get_user_by_id($new_user_id);
 
                 $session_data = array(
-                    'user_id' => $registered_user->id,
-                    'name' => $registered_user->name,
-                    'email' => $registered_user->email,
-                    'role_id' => $registered_user->role_id,
-                    'role_name' => $registered_user->role_name,
+                    'user_id'          => $registered_user->id,
+                    'name'             => $registered_user->name,
+                    'email'            => $registered_user->email,
+                    'role_id'          => $registered_user->role_id,
+                    'role_name'        => $registered_user->role_name,
                     'is_authenticated' => TRUE
                 );
 
                 $this->session->set_userdata($session_data);
 
                 $this->session->set_flashdata('success', 'Account created successfully');
-                redirect('/onboarding');
+                redirect('onboarding');
             } else {
                 $this->session->set_flashdata('error', 'Something went wrong. Please try again');
                 redirect('auth/register');
@@ -111,7 +101,32 @@ class Auth extends CI_Controller {
 
     public function logout() {
         $this->session->sess_destroy();
-        redirect('/');
+        redirect('auth/login');
+    }
+
+    private function _redirect_authenticated_user() {
+        $user_id = $this->session->userdata('user_id');
+        $role_id = $this->session->userdata('role_id');
+
+        $this->load->model('Doctor_model');
+        $this->load->model('Patient_model');
+
+        if ($role_id == 1) { 
+            redirect('dashboard');
+        } else if ($role_id == 2) { 
+            if ($this->Doctor_model->profile_exists($user_id)) {
+                redirect('dashboard');
+            } else {
+                redirect('onboarding');
+            }
+        } else if ($role_id == 3) { 
+            if ($this->Patient_model->profile_exists($user_id)) {
+                redirect('dashboard');
+            } else {
+                redirect('onboarding');
+            }
+        } else {
+            redirect('auth/login');
+        }
     }
 }
-?>
