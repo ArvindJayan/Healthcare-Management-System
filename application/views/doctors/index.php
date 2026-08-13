@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="<?= site_url('dashboard'); ?>">
@@ -35,7 +34,7 @@
     <div class="container my-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-bold text-dark mb-0">
-                <i class="bi bi-people-fill text-danger me-2"></i>Patient Management
+                <i class="bi bi-person-badge-fill text-danger me-2"></i>Doctor List
             </h3>
             <a href="<?= site_url('dashboard'); ?>" class="btn btn-outline-danger fw-semibold">
                 Go Back
@@ -55,22 +54,32 @@
             </div>
         <?php endif; ?>
 
-<div class="card border-0 shadow-sm mb-4">
+        <div class="card border-0 shadow-sm mb-4">
             <div class="card-body p-3">
-                <form action="<?= site_url('patients'); ?>" method="GET" class="row g-2 align-items-center">
-                    <div class="col">
+                <form action="<?= site_url('doctors'); ?>" method="GET" class="row g-2 align-items-center">
+                    <div class="col-md-7">
                         <div class="input-group">
                             <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
                             <input type="text" name="search" class="form-control focus-ring focus-ring-danger" placeholder="Search..." value="<?= html_escape($search); ?>">
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <select name="specialty" class="form-select focus-ring focus-ring-danger">
+                            <option value="">All Specializations</option>
+                            <?php foreach($specializations as $spec): ?>
+                                <option value="<?= html_escape($spec); ?>" <?= ($specialty === $spec) ? 'selected' : ''; ?>>
+                                    <?= html_escape($spec); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <div class="col-md-auto d-flex gap-2">
-                        <?php if(empty($search)): ?>
+                        <?php if(empty($search) && empty($specialty)): ?>
                             <button type="submit" class="btn btn-danger text-nowrap fw-semibold">
                                 <i class="bi bi-search me-1"></i> Search
                             </button>
                         <?php else: ?>
-                            <a href="<?= site_url('patients'); ?>" class="btn btn-danger text-nowrap fw-semibold">
+                            <a href="<?= site_url('doctors'); ?>" class="btn btn-outline-danger text-nowrap fw-semibold">
                                 <i class="bi bi-x-circle me-1"></i> Reset
                             </a>
                         <?php endif; ?>
@@ -85,44 +94,52 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th class="ps-4">Patient Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Gender</th>
-                                <th>Date of Birth</th>
+                                <th class="ps-4">Doctor Name</th>
+                                <th>Specialization</th>
+                                <th>Consultation Fee</th>
                                 <th class="text-end pe-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if(!empty($patients)): ?>
-                                <?php foreach($patients as $p): ?>
+                            <?php if(!empty($doctors)): ?>
+                                <?php foreach($doctors as $d): ?>
                                     <tr>
                                         <td class="ps-4 fw-bold text-dark">
-                                            <i class="bi bi-person-square text-danger me-2"></i><?= html_escape($p->name); ?>
+                                            <i class="bi bi-person-heart text-danger me-2"></i>Dr. <?= html_escape($d->name); ?>
                                         </td>
-                                        <td><?= html_escape($p->email); ?></td>
-                                        <td><?= html_escape($p->phone); ?></td>
                                         <td>
-                                            <span class="badge bg-secondary-subtle text-dark border">
-                                                <?= html_escape($p->gender); ?>
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle">
+                                                <?= html_escape($d->specialization ?? 'General'); ?>
                                             </span>
                                         </td>
-                                        <td><?= date('M d, Y', strtotime($p->dob)); ?></td>
+                                        <td class="fw-semibold text-success">
+                                            Rs.<?= number_format($d->fee ?? 0, 2); ?>
+                                        </td>
+
                                         <td class="text-end pe-4">
-                                            <button class="btn btn-sm btn-outline-danger me-1 btn-view-patient fw-semibold" data-id="<?= $p->id; ?>" data-bs-toggle="modal" data-bs-target="#viewPatientModal">
+                                            <button class="btn btn-sm btn-outline-danger me-1 btn-view-doctor fw-semibold" data-id="<?= $d->id; ?>" data-bs-toggle="modal" data-bs-target="#viewDoctorModal">
                                                 View
                                             </button>
-                                            <a href="<?= site_url('patients/edit/' . $p->id); ?>" class="btn btn-sm btn-danger fw-semibold">
-                                                Edit
-                                            </a>
+                                            
+                                            <?php if((int)$this->session->userdata('role_id') === 3): ?>
+                                                <a href="<?= site_url('appointments/book?doctor_id=' . $d->id); ?>" class="btn btn-sm btn-danger fw-semibold">
+                                                    <i class="bi bi-calendar-plus me-1"></i> Book
+                                                </a>
+                                            <?php endif; ?>
+
+                                            <?php if((int)$this->session->userdata('role_id') === 1): ?>
+                                                <a href="<?= site_url('doctors/edit/' . $d->id); ?>" class="btn btn-sm btn-danger fw-semibold">
+                                                    Edit
+                                                </a>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6" class="text-center py-5 text-muted">
+                                    <td colspan="5" class="text-center py-5 text-muted">
                                         <i class="bi bi-folder-x fs-1 d-block mb-2 text-secondary"></i>
-                                        No patient records found.
+                                        No doctor profiles found.
                                     </td>
                                 </tr>
                             <?php endif; ?>
@@ -133,14 +150,14 @@
         </div>
     </div>
 
-    <div class="modal fade" id="viewPatientModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="viewDoctorModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title fw-bold"><i class="bi bi-person-vcard me-2"></i>Patient Profile</h5>
+                    <h5 class="modal-title fw-bold"><i class="bi bi-person-badge me-2"></i>Doctor Profile</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4" id="modalPatientContent">
+                <div class="modal-body p-4" id="modalDoctorContent">
                     <div class="text-center py-4">
                         <div class="spinner-border text-danger" role="status"></div>
                     </div>
@@ -151,32 +168,29 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.querySelectorAll('.btn-view-patient').forEach(btn => {
+        document.querySelectorAll('.btn-view-doctor').forEach(btn => {
             btn.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
-                const container = document.getElementById('modalPatientContent');
+                const container = document.getElementById('modalDoctorContent');
                 
                 container.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-danger" role="status"></div></div>';
 
-                fetch(`<?= site_url('patients/view_ajax/'); ?>${id}`)
+                fetch(`<?= site_url('doctors/view_ajax/'); ?>${id}`)
                     .then(res => res.json())
                     .then(res => {
                         if(res.status === 'success') {
-                            const p = res.data;
+                            const d = res.data;
                             container.innerHTML = `
                                 <div class="text-center mb-3">
                                     <div class="rounded-circle bg-danger-subtle text-danger d-inline-flex p-3 mb-2">
-                                        <i class="bi bi-person fs-1"></i>
+                                        <i class="bi bi-person-heart fs-1"></i>
                                     </div>
-                                    <h4 class="fw-bold mb-0">${p.name}</h4>
-                                    <span class="text-muted small">${p.email}</span>
+                                    <h4 class="fw-bold mb-0">Dr. ${d.name}</h4>
+                                    <span class="badge bg-danger-subtle text-danger mt-1">${d.specialization || 'General Practitioner'}</span>
                                 </div>
                                 <ul class="list-group list-group-flush border-top border-bottom my-3">
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Phone:</strong> <span>${p.phone}</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Gender:</strong> <span>${p.gender}</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Date of Birth:</strong> <span>${p.dob}</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Age:</strong> <span>${p.age} years old</span></li>
-                                    <li class="list-group-item d-flex justify-content-between"><strong>Registered Since:</strong> <span>${p.registered_since}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>Email:</strong> <span>${d.email}</span></li>
+                                    <li class="list-group-item d-flex justify-content-between"><strong>Consultation Fee:</strong> <span class="text-success fw-bold">Rs. ${parseFloat(d.fee || 0).toFixed(2)}</span></li>
                                 </ul>
                             `;
                         } else {
