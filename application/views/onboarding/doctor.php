@@ -100,7 +100,6 @@
                                         placeholder="Enter your specialization"
                                         value="<?= set_value('specialization'); ?>" required>
                                 </div>
-                                <div class="form-text">Specify your primary medical field.</div>
                             </div>
 
                             <div class="mb-4">

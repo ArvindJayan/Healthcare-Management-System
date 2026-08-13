@@ -88,12 +88,12 @@
                         <form action="<?= site_url('doctors/edit/' . $doctor->id); ?>" method="POST">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Full Name</label>
-                                <input type="text" name="name" class="form-control" value="<?= set_value('name', $doctor->name); ?>" required>
+                                <input type="text" name="name" class="form-control focus-ring focus-ring-danger" value="<?= set_value('name', $doctor->name); ?>" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Specialization</label>
-                                <input type="text" name="specialization" class="form-control" value="<?= set_value('specialization', $doctor->specialization); ?>" required placeholder="e.g. Cardiology, Pediatrics">
+                                <input type="text" name="specialization" class="form-control focus-ring focus-ring-danger" value="<?= set_value('specialization', $doctor->specialization); ?>" required placeholder="e.g. Cardiology, Pediatrics">
                             </div>
 
                             <div class="row">

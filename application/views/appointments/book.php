@@ -67,7 +67,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="fw-bold text-dark mb-0"><i class="bi bi-calendar-plus text-danger me-2"></i>Book Consultation</h4>
                     <a href="<?= site_url('appointments'); ?>" class="btn btn-outline-danger fw-semibold">
-                        <i class="bi bi-arrow-left me-1"></i> Back
+                        Back
                     </a>
                 </div>
 
@@ -84,9 +84,9 @@
                         <form action="<?= site_url('appointments/book'); ?>" method="POST">
                             
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">Select Doctor</label>
+                                <label class="form-label fw-semibold">Doctor</label>
                                 <select name="doctor_id" class="form-select focus-ring focus-ring-danger" required>
-                                    <option value="">-- Select Doctor --</option>
+                                    <option value="">Select</option>
                                     <?php foreach($doctors as $d): ?>
                                         <option value="<?= $d->id; ?>" <?= ($selected_doctor_id == $d->id) ? 'selected' : ''; ?>>
                                             Dr. <?= html_escape($d->name); ?> (<?= html_escape($d->specialization ?? 'General'); ?>)
@@ -107,8 +107,8 @@
                             </div>
 
                             <div class="d-flex justify-content-end gap-2">
-                                <a href="<?= site_url('appointments'); ?>" class="btn btn-outline-secondary">Cancel</a>
-                                <button type="submit" class="btn btn-danger fw-semibold"><i class="bi bi-check-circle me-1"></i> Confirm Booking</button>
+                                <a href="<?= site_url('appointments'); ?>" class="btn btn-outline-danger fw-semibold">Cancel</a>
+                                <button type="submit" class="btn btn-danger fw-semibold">Confirm</button>
                             </div>
                         </form>
                     </div>

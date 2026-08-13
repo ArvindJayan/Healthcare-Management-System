@@ -55,16 +55,14 @@ class Profile extends CI_Controller {
             $role_data = [];
             if ($role_id === 2) { 
                 $role_data = [
-                    'phone'            => $this->input->post('phone', TRUE),
                     'specialization'   => $this->input->post('specialization', TRUE),
-                    'consultation_fee' => $this->input->post('consultation_fee', TRUE)
+                    'fee' => $this->input->post('consultation_fee', TRUE)
                 ];
             } elseif ($role_id === 3) { 
                 $role_data = [
                     'phone'   => $this->input->post('phone', TRUE),
                     'dob'     => $this->input->post('dob', TRUE),
-                    'gender'  => $this->input->post('gender', TRUE),
-                    'address' => $this->input->post('address', TRUE)
+                    'gender'  => $this->input->post('gender', TRUE)
                 ];
             }
 

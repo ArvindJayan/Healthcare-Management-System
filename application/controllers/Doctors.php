@@ -65,8 +65,7 @@ class Doctors extends CI_Controller {
         } else {
             $doctor_data = [
                 'specialization'   => $this->input->post('specialization', TRUE),
-                'consultation_fee' => $this->input->post('consultation_fee', TRUE),
-                'phone'            => $this->input->post('phone', TRUE)
+                'fee' => $this->input->post('consultation_fee', TRUE)
             ];
 
             $user_data = [

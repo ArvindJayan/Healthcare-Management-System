@@ -213,7 +213,7 @@
                     <div class="modal-body p-4">
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Appointment Status</label>
-                            <select name="status" id="editStatus" class="form-select" required>
+                            <select name="status" id="editStatus" class="form-select focus-ring focus-ring-danger" required>
                                 <option value="Pending">Pending</option>
                                 <option value="Completed">Completed</option>
                                 <option value="Cancelled">Cancelled</option>
@@ -221,15 +221,15 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Diagnosis</label>
-                            <textarea name="diagnosis" id="editDiagnosis" class="form-control" rows="3" placeholder="Enter clinical diagnosis..."></textarea>
+                            <textarea name="diagnosis" id="editDiagnosis" class="form-control focus-ring focus-ring-danger" rows="3" placeholder="Enter clinical diagnosis..."></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Prescription / Notes</label>
-                            <textarea name="prescription" id="editPrescription" class="form-control" rows="3" placeholder="Enter medicines, dosages, or notes..."></textarea>
+                            <textarea name="prescription" id="editPrescription" class="form-control focus-ring focus-ring-danger" rows="3" placeholder="Enter medicines, dosages, or notes..."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer border-0">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-danger fw-semibold" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-danger fw-semibold">Save Changes</button>
                     </div>
                 </form>

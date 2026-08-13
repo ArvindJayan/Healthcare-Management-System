@@ -80,7 +80,7 @@ class Appointments extends CI_Controller {
     public function update($id) {
         $role_id = (int)$this->session->userdata('role_id');
 
-        if ($role_id === 3) { // Block patients from using update route
+        if ($role_id === 3) { 
             $this->session->set_flashdata('error', 'Unauthorized action.');
             redirect('appointments');
         }

@@ -121,17 +121,17 @@
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light">
-                            <tr>
+                            <tr class="text-start">
                                 <th class="ps-4">Doctor Name</th>
                                 <th>Specialization</th>
                                 <th>Consultation Fee</th>
-                                <th class="text-end pe-4">Actions</th>
+                                <th class="text-end pe-5">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(!empty($doctors)): ?>
                                 <?php foreach($doctors as $d): ?>
-                                    <tr>
+                                    <tr class="text-start">
                                         <td class="ps-4 fw-bold text-dark">
                                             <i class="bi bi-person-heart text-danger me-2"></i>Dr. <?= html_escape($d->name); ?>
                                         </td>
