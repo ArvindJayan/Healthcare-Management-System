@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body class="bg-secondary bg-opacity-25">
+<body class="bg-danger bg-opacity-10">
 
 <div class="container my-5 py-5">
     <div class="row justify-content-center">
@@ -31,7 +31,7 @@
                             <label class="form-label text-secondary fw-semibold">Email Address</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" name="email" class="form-control" placeholder="name@example" required>
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
                             </div>
                         </div>
 
@@ -39,7 +39,7 @@
                             <label class="form-label text-secondary fw-semibold">Password</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" name="password" class="form-control" required>
+                                <input type="password" name="password" placeholder="Enter your password" class="form-control" required>
                             </div>
                         </div>
 

@@ -57,11 +57,11 @@
 
     <div class="container my-5">
 
-        <div class="row mb-4">
+        <div class="row mb-5">
             <div class="col">
                 <div class="p-4 bg-white rounded-3 shadow-sm border-start border-4 border-danger">
                     <h2 class="fw-bold text-danger mb-1">Welcome back, <?= html_escape($name ?? 'User'); ?>!</h2>
-                    <p class="text-muted mb-0">Role: <strong><?= html_escape($role_name ?? 'Patient'); ?></strong> | Select a module below to get started.</p>
+                    <p class="text-muted mb-0">Select a module below to get started.</p>
                 </div>
             </div>
         </div>
@@ -90,7 +90,7 @@
                             <i class="bi bi-person-badge-fill fs-1"></i>
                         </div>
                         <h5 class="fw-bold">Doctor List</h5>
-                        <p class="text-muted small">View registered doctor profiles, specializations, consultation fees, and availability.</p>
+                        <p class="text-muted small">View registered doctor profiles, consultation fees, and availability.</p>
                         <a href="<?= site_url('/doctors'); ?>" class="btn btn-outline-danger w-100 mt-2 fw-semibold">
                             <i class="bi bi-card-list me-1"></i> View Doctors
                         </a>
