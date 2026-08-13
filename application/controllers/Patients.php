@@ -1,108 +1,81 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * @property CI_Session $session
- * @property CI_Input $input
- * @property CI_Form_validation $form_validation
- * @property CI_Pagination $pagination
- * @property Patient_model $Patient_model
- */
 class Patients extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-
+        $this->load->library('session');
+        $this->load->library('form_validation');
+        $this->load->model('Patient_model');
         if (!$this->session->userdata('is_authenticated')) {
-            $this->session->set_flashdata('error', 'Please log in to continue.');
-            redirect('/auth/login');
+            redirect('auth/login');
         }
 
-        $this->load->model('Patient_model');
-        $this->load->library('pagination');
-        $this->load->library('form_validation');
+        $role_id = (int)$this->session->userdata('role_id');
+
+        if ($role_id === 3) {
+            $this->session->set_flashdata('error', 'Access denied. Patients cannot access patient management.');
+            redirect('dashboard');
+        }
     }
 
     public function index() {
         $search = $this->input->get('search', TRUE);
-
-        $config['base_url'] = site_url('patients/index');
-        $config['total_rows'] = $this->Patient_model->get_patients_count($search);
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['query_string_segment'] = 'page';
-        $config['reuse_query_string'] = TRUE;
-
-        $config['full_tag_open'] = '<ul class="pagination pagination-sm m-0 float-end">';
-        $config['full_tag_close'] = '</ul>';
-        $config['num_tag_open'] = '<li class="page-item">';
-        $config['num_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link bg-danger border-danger" href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['next_tag_open'] = '<li class="page-item">';
-        $config['next_tag_close'] = '</li>';
-        $config['prev_tag_open'] = '<li class="page-item">';
-        $config['prev_tag_close'] = '</li>';
-        $config['attributes'] = array('class' => 'page-link');
-
-        $this->pagination->initialize($config);
-
-        $page = ($this->input->get('page')) ? $this->input->get('page') : 0;
-
-        $data['patients'] = $this->Patient_model->get_all_patients($search, $config['per_page'], $page);
-        $data['pagination'] = $this->pagination->create_links();
-        $data['search'] = $search;
+        $data['search']   = $search;
+        $data['patients'] = $this->Patient_model->get_all_patients($search);
 
         $this->load->view('patients/index', $data);
     }
 
-    public function view($id = NULL) {
-        $user_id = $this->session->userdata('user_id');
-        $role_id = $this->session->userdata('role_id');
+    public function view_ajax($id) {
+        $patient = $this->Patient_model->get_patient_by_id($id);
+        if ($patient) {
+            // Calculate age dynamically
+            $dob = new DateTime($patient->dob);
+            $now = new DateTime();
+            $patient->age = $dob->diff($now)->y;
 
-        if ($id) {
-            $data['patient'] = $this->Patient_model->get_patient_by_id($id);
+            echo json_encode(['status' => 'success', 'data' => $patient]);
         } else {
-            $data['patient'] = $this->Patient_model->get_patient_by_user_id($user_id);
+            echo json_encode(['status' => 'error', 'message' => 'Patient record not found.']);
         }
-
-        if (!$data['patient']) {
-            show_404();
-        }
-
-        $this->load->view('patients/view', $data);
     }
 
     public function edit($id) {
-        $data['patient'] = $this->Patient_model->get_patient_by_id($id);
+        $patient = $this->Patient_model->get_patient_by_id($id);
 
-        if (!$data['patient']) {
-            show_404();
+        if (!$patient) {
+            $this->session->set_flashdata('error', 'Patient not found.');
+            redirect('patients');
         }
 
+        $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
         $this->form_validation->set_rules('phone', 'Phone Number', 'required|trim');
-        $this->form_validation->set_rules('gender', 'Gender', 'required|in_list[Male,Female,Other]');
+        $this->form_validation->set_rules('gender', 'Gender', 'required');
         $this->form_validation->set_rules('dob', 'Date of Birth', 'required');
 
         if ($this->form_validation->run() == FALSE) {
+            $data['patient'] = $patient;
             $this->load->view('patients/edit', $data);
         } else {
-            $update_data = array(
-                'phone'           => $this->input->post('phone', TRUE),
-                'gender'          => $this->input->post('gender', TRUE),
-                'dob'             => $this->input->post('dob', TRUE),
-                'blood_group'     => $this->input->post('blood_group', TRUE),
-                'address'         => $this->input->post('address', TRUE),
-                'medical_history' => $this->input->post('medical_history', TRUE)
-            );
+            $patient_data = [
+                'phone'  => $this->input->post('phone', TRUE),
+                'gender' => $this->input->post('gender', TRUE),
+                'dob'    => $this->input->post('dob', TRUE)
+            ];
 
-            if ($this->Patient_model->update_patient($id, $update_data)) {
-                $this->session->set_flashdata('success', 'Profile updated successfully.');
-                redirect('/patients/view/' . $id);
+            $user_data = [
+                'name' => $this->input->post('name', TRUE)
+            ];
+
+            if ($this->Patient_model->update_patient($id, $patient_data, $user_data)) {
+                $this->session->set_flashdata('success', 'Patient profile updated successfully.');
             } else {
-                $this->session->set_flashdata('error', 'Update failed. Try again.');
-                redirect('/patients/edit/' . $id);
+                $this->session->set_flashdata('error', 'Failed to update patient profile.');
             }
+
+            redirect('patients');
         }
     }
 }
