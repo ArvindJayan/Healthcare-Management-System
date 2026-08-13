@@ -34,15 +34,12 @@
 
     <div class="container my-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-1">
-                        <li class="breadcrumb-item"><a href="<?= site_url('dashboard'); ?>" class="text-danger text-decoration-none">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Patients</li>
-                    </ol>
-                </nav>
-                <h3 class="fw-bold text-dark mb-0"><i class="bi bi-people-fill text-danger me-2"></i>Patient Management</h3>
-            </div>
+            <h3 class="fw-bold text-dark mb-0">
+                <i class="bi bi-people-fill text-danger me-2"></i>Patient Management
+            </h3>
+            <a href="<?= site_url('dashboard'); ?>" class="btn btn-outline-danger fw-semibold">
+                Go Back
+            </a>
         </div>
 
         <?php if($this->session->flashdata('success')): ?>
@@ -58,19 +55,24 @@
             </div>
         <?php endif; ?>
 
-        <div class="card border-0 shadow-sm mb-4">
+<div class="card border-0 shadow-sm mb-4">
             <div class="card-body p-3">
                 <form action="<?= site_url('patients'); ?>" method="GET" class="row g-2 align-items-center">
-                    <div class="col-md-10">
+                    <div class="col">
                         <div class="input-group">
                             <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
                             <input type="text" name="search" class="form-control focus-ring focus-ring-danger" placeholder="Search..." value="<?= html_escape($search); ?>">
                         </div>
                     </div>
-                    <div class="col-md-2 d-flex gap-2">
-                        <button type="submit" class="btn btn-danger w-100 fw-semibold"><i class="bi bi-search me-1"></i> Search</button>
-                        <?php if(!empty($search)): ?>
-                            <a href="<?= site_url('patients'); ?>" class="btn btn-outline-secondary">Reset</a>
+                    <div class="col-md-auto d-flex gap-2">
+                        <?php if(empty($search)): ?>
+                            <button type="submit" class="btn btn-danger text-nowrap fw-semibold">
+                                <i class="bi bi-search me-1"></i> Search
+                            </button>
+                        <?php else: ?>
+                            <a href="<?= site_url('patients'); ?>" class="btn btn-danger text-nowrap fw-semibold">
+                                <i class="bi bi-x-circle me-1"></i> Reset
+                            </a>
                         <?php endif; ?>
                     </div>
                 </form>
