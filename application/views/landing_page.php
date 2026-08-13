@@ -65,7 +65,7 @@
 		</div>
 	</section>
 
-	<section id="features" class="py-3 bg-light">
+	<section id="features" class="py-3 my-5 bg-light">
 		<div class="container py-4">
 			<div class="text-center mb-5">
 				<h2 class="fw-bold text-danger">Key Modules</h2>

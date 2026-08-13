@@ -66,13 +66,28 @@ class Auth extends CI_Controller {
                 'password' => $this->input->post('password', TRUE)
             );
 
-            if ($this->User_model->register_user($user_data)) {
+            $new_user_id = $this->User_model->register_user($user_data);
+
+            if ($new_user_id) {
+                $registered_user = $this->User_model->get_user_by_id($new_user_id);
+
+                $session_data = array(
+                    'user_id' => $registered_user->id,
+                    'name' => $registered_user->name,
+                    'email' => $registered_user->email,
+                    'role_id' => $registered_user->role_id,
+                    'role_name' => $registered_user->role_name,
+                    'is_authenticated' => TRUE
+                );
+
+                $this->session->set_userdata($session_data);
+
                 $this->session->set_flashdata('success', 'Account created successfully');
-                redirect('auth/login');
+                redirect('/dashboard');
             } else {
-                $this->session->set_flashdata('error', 'Something went wrong. Please try again.');
+                $this->session->set_flashdata('error', 'Something went wrong. Please try again');
                 redirect('auth/register');
-            }
+            }       
         }
     }   
 
