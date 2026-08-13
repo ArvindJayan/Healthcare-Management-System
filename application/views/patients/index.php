@@ -14,7 +14,7 @@
     <a class="navbar-brand fw-bold" href="<?= site_url('/dashboard'); ?>"><i class="bi bi-hospital me-2"></i>HMS Portal</a>
     <div class="navbar-nav ms-auto">
       <span class="nav-link text-white me-3">Welcome, <?= $this->session->userdata('name'); ?></span>
-      <a class="btn btn-outline-light btn-sm" href="<?= site_url('/auth/logout'); ?>">Logout</a>
+      <a class="btn btn-light text-danger fw-medium" href="<?= site_url('/auth/logout'); ?>">Logout</a>
     </div>
   </div>
 </nav>
@@ -24,7 +24,6 @@
         <h3 class="fw-bold text-dark"><i class="bi bi-people me-2"></i>Patient Directory</h3>
     </div>
 
-    <!-- Flash Messages -->
     <?php if($this->session->flashdata('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= $this->session->flashdata('success'); ?>
@@ -37,21 +36,20 @@
         <div class="card-body">
             <form action="<?= site_url('/patients'); ?>" method="GET" class="row g-2">
                 <div class="col-md-10">
-                    <input type="text" name="search" class="form-control" placeholder="Search by Name, Email, or Phone..." value="<?= html_escape($search); ?>">
+                    <input type="text" name="search" class="form-control focus-ring focus-ring-danger" placeholder="Search by Name, Email, or Phone..." value="<?= html_escape($search); ?>">
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-outline-danger w-100"><i class="bi bi-search me-1"></i> Search</button>
+                    <button type="submit" class="btn btn-outline-danger fw-medium w-100"><i class="bi bi-search me-1"></i> Search</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Patient Table -->
     <div class="card border-0 shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
-                    <thead class="table-dark">
+                    <thead class="table-danger">
                         <tr>
                             <th># ID</th>
                             <th>Full Name</th>

@@ -38,7 +38,7 @@
                             <label class="form-label text-secondary fw-semibold">Full Name</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                <input type="text" name="name" class="form-control" value="<?= set_value('name'); ?>" placeholder="Enter your name" required>
+                                <input type="text" name="name" class="form-control focus-ring focus-ring-danger" value="<?= set_value('name'); ?>" placeholder="Enter your name" required>
                             </div>
                         </div>
 
@@ -46,7 +46,7 @@
                             <label class="form-label text-secondary fw-semibold">Email Address</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" name="email" class="form-control" value="<?= set_value('email'); ?>" placeholder="Enter your email" required>
+                                <input type="email" name="email" class="form-control focus-ring focus-ring-danger" value="<?= set_value('email'); ?>" placeholder="Enter your email" required>
                             </div>
                         </div>
 
@@ -69,7 +69,7 @@
                             <label class="form-label text-secondary fw-semibold">Password</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                                <input type="password" name="password" class="form-control focus-ring focus-ring-danger" placeholder="Enter your password" required>
                             </div>
                         </div>
 
@@ -77,7 +77,7 @@
                             <label class="form-label text-secondary fw-semibold">Confirm Password</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                <input type="password" name="confirm_password" class="form-control" placeholder="Re-enter your password" required>
+                                <input type="password" name="confirm_password" class="form-control focus-ring focus-ring-danger" placeholder="Re-enter your password" required>
                             </div>
                         </div>
 

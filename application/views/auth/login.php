@@ -31,7 +31,7 @@
                             <label class="form-label text-secondary fw-semibold">Email Address</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                                <input type="email" name="email" class="form-control focus-ring focus-ring-danger" placeholder="Enter your email" required>
                             </div>
                         </div>
 
@@ -39,7 +39,7 @@
                             <label class="form-label text-secondary fw-semibold">Password</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input type="password" name="password" placeholder="Enter your password" class="form-control" required>
+                                <input type="password" name="password" placeholder="Enter your password" class="form-control focus-ring focus-ring-danger outline-danger" required>
                             </div>
                         </div>
 
