@@ -40,6 +40,42 @@ class Auth extends CI_Controller {
         }
     }
 
+    public function register() {
+        $this->form_validation->set_rules('name', 'Full Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('role_id', 'Role', 'required|numeric');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+        $this->form_validation->set_rules('conform_password', 'Confirm Password', 'required|matches[password]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data['roles'] = $this->User_model->get_non_admin_roles();
+            $this->load->view('auth/register', $data); 
+        } else {
+            $selected_role_id = (int)$this->input->post('role_id', TRUE);
+
+            if (selected_role === 1) {
+                $this->session->set_flashdata('error', 'Admin registration is restricted.');
+                redirect('auth/register');
+                return;
+            }
+
+            $user_data = array(
+                'name' => $this->input->post('name', TRUE),
+                'email' => $this->input->post('email', TRUE),
+                'role' => $selected_role_id,
+                'password' => $this->input->post('password', TRUE)
+            );
+
+            if ($this->User_model->register_user($user_data)) {
+                $this->session->set_flashdata('success', 'Account created successfully');
+                redirect('auth/login');
+            } else {
+                $this->session->set_flashdata('error', 'Something went wrong. Please try again.');
+                redirect('auth/register');
+            }
+        }
+    }   
+
     public function logout() {
         $this->session->sess_destroy();
         redirect('/');
