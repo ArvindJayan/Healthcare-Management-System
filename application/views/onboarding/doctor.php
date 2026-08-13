@@ -30,7 +30,7 @@
                 <div class="card-body p-4">
                     <div class="text-center mb-4">
                         <div class="rounded-circle bg-danger-subtle text-danger d-inline-flex align-items-center justify-content-center mb-2" style="width: 60px; height: 60px;">
-                            <i class="bi bi-stethoscope fs-3"></i>
+                            <i class="bi bi-hospital fs-3"></i>
                         </div>
                         <h4 class="fw-bold">Welcome, Dr. <?= html_escape($this->session->userdata('name')); ?>!</h4>
                         <p class="text-muted small">Please complete your profile to continue.</p>

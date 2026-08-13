@@ -33,10 +33,28 @@ class Auth extends CI_Controller {
                 'is_authenticated' => TRUE
             );
             $this->session->set_userdata($session_data);
-            redirect('/dashboard');
+            
+            $this->load->model('Doctor_model');
+            $this->load->model('Patient_model');
+
+            if ($user->role_id == 1) { 
+                redirect('/dashboard');
+            } else if ($user->role_id == 2) { 
+                if ($this->Doctor_model->profile_exists($user->id)) {
+                    redirect('/dashboard');
+                } else {
+                    redirect('/onboarding');
+                }
+            } else if ($user->role_id == 3) { 
+                if ($this->Patient_model->profile_exists($user->id)) {
+                    redirect('/dashboard');
+                } else {
+                    redirect('/onboarding');
+                }
         } else {
             $this->session->set_flashdata('error', 'Invalid username or password.');
             redirect('/auth/login');
+            }
         }
     }
 
