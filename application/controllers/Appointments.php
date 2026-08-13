@@ -30,7 +30,7 @@ class Appointments extends CI_Controller {
         $role_id = (int)$this->session->userdata('role_id');
         $user_id = $this->session->userdata('user_id');
 
-        if ($role_id !== 3) { // Patients only
+        if ($role_id !== 3) { 
             $this->session->set_flashdata('error', 'Only patients can book appointments.');
             redirect('appointments');
         }
