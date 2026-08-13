@@ -9,14 +9,56 @@
 </head>
 <body class="bg-danger bg-opacity-10">
 
-<nav class="navbar navbar-dark bg-danger shadow-sm">
-  <div class="container-fluid">
-    <span class="navbar-brand fw-bold mb-0 h1">
-      <i class="bi bi-hospital me-2"></i>HMS Portal
-    </span>
-    <a class="btn btn-light text-danger" href="<?= site_url('/auth/logout'); ?>">Logout</a>
-  </div>
-</nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="<?= site_url('/dashboard'); ?>">
+                <i class="bi bi-hospital fs-3 me-2"></i> HMS Portal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="dashNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white d-flex align-items-center gap-2 pe-0" href="#"
+                            id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span
+                                class="fw-semibold text-white"><?= html_escape($this->session->userdata('name') ?? 'User'); ?></span>
+
+                            <span class="badge bg-light text-danger fw-semibold" style="font-size: 0.75rem;">
+                                <?= html_escape($this->session->userdata('role_name') ?? 'User'); ?>
+                            </span>
+
+                            <div class="rounded-circle bg-white text-danger d-flex align-items-center justify-content-center shadow-sm ms-1"
+                                style="width: 38px; height: 38px; flex-shrink: 0;">
+                                <i class="bi bi-person-fill fs-5"></i>
+                            </div>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="userDropdown">
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center"
+                                    href="<?= site_url('/profile'); ?>">
+                                    <i class="bi bi-person-gear text-danger me-2 fs-5"></i> My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider my-1">
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 d-flex align-items-center text-danger fw-semibold"
+                                    href="<?= site_url('/auth/logout'); ?>">
+                                    <i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 <div class="container my-5">
     <div class="row justify-content-center">
