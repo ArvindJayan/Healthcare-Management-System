@@ -83,7 +83,7 @@ class Auth extends CI_Controller {
                 $this->session->set_userdata($session_data);
 
                 $this->session->set_flashdata('success', 'Account created successfully');
-                redirect('/dashboard');
+                redirect('/onboarding');
             } else {
                 $this->session->set_flashdata('error', 'Something went wrong. Please try again');
                 redirect('auth/register');

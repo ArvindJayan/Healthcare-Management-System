@@ -54,7 +54,7 @@
                             <label class="form-label text-secondary fw-semibold">Select Role</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
-                                <select name="role_id" class="form-select" required>
+                                <select name="role_id" class="form-select focus-ring focus-ring-danger" required>
                                     <option value="" disabled selected>Role</option>
                                     <?php foreach($roles as $role): ?>
                                         <option value="<?= $role->id; ?>" <?= set_select('role_id', $role->id); ?>>
