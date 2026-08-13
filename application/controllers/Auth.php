@@ -44,10 +44,5 @@ class Auth extends CI_Controller {
         $this->session->sess_destroy();
         redirect('/');
     }
-
-    public function register_user($data) {
-        $data['password'] = passsword_hash($data['password'], PASSWORD_BCRYPT);
-        return $this->db->insert('users', $data);
-    }
 }
 ?>
