@@ -101,7 +101,7 @@ class Auth extends CI_Controller {
 
     public function logout() {
         $this->session->sess_destroy();
-        redirect('auth/login');
+        redirect('/');
     }
 
     private function _redirect_authenticated_user() {
