@@ -24,5 +24,16 @@ class User_model extends CI_Model {
         }
         return FALSE;
     }
+
+        public function register_user($data) {
+        $data['password'] = passsword_hash($data['password'], PASSWORD_BCRYPT);
+        return $this->db->insert('users', $data);
+    }
+
+    public function get_non_admin_roles() {
+        $this->db->where('name !=', 'Admin');
+        $this->db->where('id !=', 1);
+        return $this->db->get('roles')->result();
+    }
 }
 ?>
