@@ -1,7 +1,6 @@
-````markdown
 # Healthcare Management System
 
-A web-based Healthcare Management System built using PHP and CodeIgniter 3. The application provides role-based functionality for administrators, doctors, and patients, including authentication, role-specific onboarding, doctor/patient management, and appointment scheduling.
+A web-based Healthcare Management System built using **PHP and CodeIgniter 3**. The application provides role-based functionality for administrators, doctors, and patients, including authentication, role-specific onboarding, doctor and patient management, and appointment scheduling.
 
 > **Project Status:** Learning / Development Project
 
@@ -9,25 +8,25 @@ A web-based Healthcare Management System built using PHP and CodeIgniter 3. The 
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [User Roles](#user-roles)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Authentication Flow](#authentication-flow)
-- [Registration and Onboarding Flow](#registration-and-onboarding-flow)
-- [Appointment Flow](#appointment-flow)
-- [Database Design](#database-design)
-- [Request Lifecycle](#request-lifecycle)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Running the Application](#running-the-application)
-- [Security](#security)
-- [Known Limitations](#known-limitations)
-- [Future Improvements](#future-improvements)
-- [Learning Objectives](#learning-objectives)
-- [License](#license)
+* [Overview](#overview)
+* [Features](#features)
+* [User Roles](#user-roles)
+* [Technology Stack](#technology-stack)
+* [Architecture](#architecture)
+* [Project Structure](#project-structure)
+* [Authentication Flow](#authentication-flow)
+* [Registration and Onboarding Flow](#registration-and-onboarding-flow)
+* [Appointment Flow](#appointment-flow)
+* [Database Design](#database-design)
+* [Request Lifecycle](#request-lifecycle)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Running the Application](#running-the-application)
+* [Security](#security)
+* [Known Limitations](#known-limitations)
+* [Future Improvements](#future-improvements)
+* [Learning Objectives](#learning-objectives)
+* [License](#license)
 
 ---
 
@@ -39,28 +38,34 @@ The application is built using the **Model-View-Controller (MVC)** architecture 
 
 The major application areas are:
 
-- User authentication
-- User registration
-- Role-specific onboarding
-- Doctor management
-- Patient management
-- Appointment scheduling
-- Dashboard functionality
-- Profile management
+* User authentication
+* User registration
+* Role-specific onboarding
+* Doctor management
+* Patient management
+* Appointment scheduling
+* Dashboard functionality
+* Profile management
 
 At a high level, the application follows this structure:
 
 ```text
-                    Healthcare Management System
-                               |
-             +-----------------+-----------------+
-             |                 |                 |
-       Authentication      Doctor Module    Patient Module
-             |                 |                 |
-             +-----------------+-----------------+
-                               |
-                        Appointment Module
-````
+Healthcare Management System
+│
+├── Authentication
+│   ├── Registration
+│   ├── Login
+│   └── Logout
+│
+├── User Management
+│   └── Role-specific Onboarding
+│
+├── Doctor Management
+│
+├── Patient Management
+│
+└── Appointment Management
+```
 
 ---
 
@@ -166,28 +171,28 @@ The application follows CodeIgniter 3's MVC architecture.
 
 ```text
                         HTTP Request
-                             |
-                             v
+                             │
+                             ▼
                          index.php
-                             |
-                             v
+                             │
+                             ▼
                      CodeIgniter Bootstrap
-                             |
-                             v
+                             │
+                             ▼
                            Router
-                             |
-                             v
+                             │
+                             ▼
                         Controller
                        /           \
                       /             \
-                     v               v
+                     ▼               ▼
                   Model             View
-                    |
-                    v
+                    │
+                    ▼
                  Database
-                    |
-                    v
-               MySQL / MariaDB
+                    │
+                    ▼
+              MySQL / MariaDB
 ```
 
 ### Controller
@@ -285,32 +290,31 @@ Healthcare-Management-System/
 
 ---
 
-# Authentication Flow
+## Authentication Flow
 
 The authentication process is handled primarily by the `Auth` controller and `User_model`.
 
 ```text
 User
- |
- v
+ │
+ ▼
 Login / Registration
- |
- v
+ │
+ ▼
 Auth Controller
- |
- +--> Validate Input
- |
- +--> User Model
- |
- +--> Database
- |
- v
-Create Session
- |
- v
+ │
+ ├── Validate Input
+ │
+ ├── User Model
+ │
+ ├── Database
+ │
+ └── Create Session
+ │
+ ▼
 Authenticated User
- |
- v
+ │
+ ▼
 Role-based Application
 ```
 
@@ -320,11 +324,11 @@ The session is subsequently used by other controllers to identify the current us
 
 ---
 
-# Registration and Onboarding Flow
+## Registration and Onboarding Flow
 
 Registration and onboarding are treated as two separate stages.
 
-## Step 1: Registration
+### Step 1: Registration
 
 The user provides common account information:
 
@@ -336,9 +340,7 @@ The user provides common account information:
 
 The registration request is validated before a user record is created.
 
----
-
-## Step 2: Create User
+### Step 2: Create User
 
 After successful validation, the common account information is stored in the `users` table.
 
@@ -346,20 +348,17 @@ Conceptually:
 
 ```text
 users
----------------------------
-id
-name
-email
-password
-role_id
-created_at
+├── id
+├── name
+├── email
+├── password
+├── role_id
+└── created_at
 ```
 
 The password is hashed before being stored.
 
----
-
-## Step 3: Create Session
+### Step 3: Create Session
 
 After the user account is created, the application retrieves the newly created user and creates an authenticated session.
 
@@ -374,13 +373,11 @@ The session contains information such as:
 
 The user is then redirected to the onboarding page.
 
----
-
-## Step 4: Role-specific Onboarding
+### Step 4: Role-specific Onboarding
 
 The onboarding controller checks the user's role and determines which additional information needs to be collected.
 
-### Doctor Onboarding
+#### Doctor Onboarding
 
 Doctors provide information such as:
 
@@ -389,7 +386,7 @@ Doctors provide information such as:
 
 This information is stored in the `doctors` table.
 
-### Patient Onboarding
+#### Patient Onboarding
 
 Patients provide information such as:
 
@@ -399,31 +396,29 @@ Patients provide information such as:
 
 This information is stored in the `patients` table.
 
----
-
-## Registration and Onboarding Architecture
+### Registration and Onboarding Architecture
 
 ```text
                      Registration
-                          |
-                          v
+                          │
+                          ▼
                      users table
-                          |
+                          │
                     user_id + role_id
-                          |
-                          v
+                          │
+                          ▼
                       Onboarding
                      /          \
                     /            \
-                   v              v
+                   ▼              ▼
                 Doctor          Patient
-                   |              |
-                   v              v
+                   │              │
+                   ▼              ▼
               doctors table   patients table
-                   |              |
-                   +------+-------+
-                          |
-                          v
+                   │              │
+                   └──────┬───────┘
+                          │
+                          ▼
                       Dashboard
 ```
 
@@ -431,38 +426,38 @@ The separation between `users`, `doctors`, and `patients` allows common authenti
 
 ---
 
-# Appointment Flow
+## Appointment Flow
 
 The basic appointment workflow is:
 
 ```text
 Patient
-   |
-   v
+   │
+   ▼
 Browse Doctors
-   |
-   v
+   │
+   ▼
 Select Doctor
-   |
-   v
+   │
+   ▼
 Select Date
-   |
-   v
+   │
+   ▼
 Select Time
-   |
-   v
+   │
+   ▼
 Submit Appointment
-   |
-   v
+   │
+   ▼
 Appointments Controller
-   |
-   v
+   │
+   ▼
 Appointment Model
-   |
-   v
+   │
+   ▼
 appointments table
-   |
-   v
+   │
+   ▼
 Appointment Created
 ```
 
@@ -478,22 +473,22 @@ An appointment associates a patient with a doctor and contains information such 
 
 ---
 
-# Database Design
+## Database Design
 
 The application uses a relational database with separate tables for authentication, role-specific profiles, and appointments.
 
-## Main Tables
+### Main Tables
 
 ```text
 users
-  |
-  +---- doctors
-  |
-  +---- patients
-           |
-           +---- appointments
-                    |
-                    +---- doctors
+  │
+  ├── doctors
+  │
+  └── patients
+        │
+        └── appointments
+               │
+               └── doctors
 ```
 
 ### `users`
@@ -552,7 +547,7 @@ Stores appointment and consultation information.
 
 ---
 
-# Database Relationships
+## Database Relationships
 
 The main relationships can be represented as:
 
@@ -560,14 +555,14 @@ The main relationships can be represented as:
                     users
                    /     \
                   /       \
-                 v         v
+                 ▼         ▼
              doctors     patients
-                            |
-                            |
-                            v
+                            │
+                            │
+                            ▼
                        appointments
-                            ^
-                            |
+                            ▲
+                            │
                          doctors
 ```
 
@@ -575,56 +570,56 @@ More formally:
 
 ```text
 users
-  |
-  +-- 1 : 0..1 --> doctors
-  |
-  +-- 1 : 0..1 --> patients
+  │
+  ├── 1 : 0..1 ──> doctors
+  │
+  └── 1 : 0..1 ──> patients
 
 patients
-  |
-  +-- 1 : N --> appointments
+  │
+  └── 1 : N ──> appointments
 
 doctors
-  |
-  +-- 1 : N --> appointments
+  │
+  └── 1 : N ──> appointments
 ```
 
-A user therefore represents the common identity/authentication layer, while `doctors` and `patients` contain role-specific information.
+A user therefore represents the common identity and authentication layer, while `doctors` and `patients` contain role-specific information.
 
 ---
 
-# Request Lifecycle
+## Request Lifecycle
 
 A typical request through the application follows this general flow:
 
 ```text
 Browser
-   |
-   | HTTP Request
-   v
+   │
+   │ HTTP Request
+   ▼
 .htaccess
-   |
-   v
+   │
+   ▼
 index.php
-   |
-   v
+   │
+   ▼
 CodeIgniter Bootstrap
-   |
-   v
+   │
+   ▼
 Router
-   |
-   v
+   │
+   ▼
 Controller
-   |
-   +---------> Model
-   |              |
-   |              v
-   |           Database
-   |
-   v
+   │
+   ├──────────► Model
+   │              │
+   │              ▼
+   │           Database
+   │
+   ▼
 View
-   |
-   v
+   │
+   ▼
 HTTP Response
 ```
 
@@ -632,31 +627,31 @@ For example:
 
 ```text
 GET /doctors
-      |
-      v
+      │
+      ▼
 Doctors Controller
-      |
-      v
+      │
+      ▼
 Doctor_model
-      |
-      v
+      │
+      ▼
 doctors table
-      |
-      v
+      │
+      ▼
 Doctor data
-      |
-      v
+      │
+      ▼
 Doctors View
-      |
-      v
+      │
+      ▼
 HTML Response
 ```
 
 ---
 
-# Installation
+## Installation
 
-## Prerequisites
+### Prerequisites
 
 The following software is required:
 
@@ -666,9 +661,7 @@ The following software is required:
 * Composer
 * Web browser
 
----
-
-## 1. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/ArvindJayan/Healthcare-Management-System.git
@@ -680,19 +673,13 @@ Then:
 cd Healthcare-Management-System
 ```
 
----
-
-## 2. Install Dependencies
-
-Install the Composer dependencies:
+### 2. Install Dependencies
 
 ```bash
 composer install
 ```
 
----
-
-## 3. Create the Database
+### 3. Create the Database
 
 Create a MySQL/MariaDB database for the application.
 
@@ -702,9 +689,7 @@ For example:
 CREATE DATABASE healthcare_management_system;
 ```
 
----
-
-## 4. Configure the Database
+### 4. Configure the Database
 
 Open:
 
@@ -731,11 +716,11 @@ Replace the values with the credentials for your local environment.
 
 ---
 
-# Configuration
+## Configuration
 
-## Base URL
+### Base URL
 
-Update:
+Open:
 
 ```text
 application/config/config.php
@@ -753,7 +738,7 @@ Make sure this is consistent with the project's `.htaccess` configuration.
 
 ---
 
-# Running the Application
+## Running the Application
 
 Place the project inside your Apache web root.
 
@@ -782,33 +767,33 @@ The exact URL depends on your local Apache configuration.
 
 ---
 
-# Security
+## Security
 
 The application implements several basic security mechanisms.
 
-## Password Hashing
+### Password Hashing
 
 Passwords are hashed using PHP's password hashing functionality before being stored in the database.
 
-## Session-based Authentication
+### Session-based Authentication
 
 Authenticated users are identified through CodeIgniter sessions.
 
-## Input Validation
+### Input Validation
 
 User input is validated using CodeIgniter's form validation functionality.
 
-## Role-based Access
+### Role-based Access
 
 Application functionality is separated based on the user's role.
 
 ---
 
-# Known Limitations
+## Known Limitations
 
 This project is intended primarily as a learning/development project and should not be considered production-ready healthcare software.
 
-## Appointment Concurrency
+### Appointment Concurrency
 
 Checking whether an appointment slot is available before inserting an appointment does not completely eliminate race conditions.
 
@@ -816,13 +801,13 @@ For example:
 
 ```text
 Request A                 Request B
-    |                         |
-    v                         v
+    │                         │
+    ▼                         ▼
 Check slot                Check slot
-    |                         |
+    │                         │
  Available                 Available
-    |                         |
-    v                         v
+    │                         │
+    ▼                         ▼
  Insert                    Insert
 ```
 
@@ -830,9 +815,7 @@ Both requests can potentially observe the slot as available.
 
 A production implementation should enforce the relevant business invariant at the database level and handle conflicting concurrent requests appropriately.
 
----
-
-## Resource-level Authorization
+### Resource-level Authorization
 
 Checking a user's role is not sufficient to determine whether the user owns a particular resource.
 
@@ -849,9 +832,7 @@ the application should verify both:
 
 This prevents unauthorized access to another user's data.
 
----
-
-## Transaction Handling
+### Transaction Handling
 
 Operations involving multiple related database changes should be evaluated for transactional consistency.
 
@@ -859,17 +840,15 @@ For example:
 
 ```text
 Create User
-    |
-    +---- Create Doctor/Patient Profile
+    │
+    └── Create Doctor/Patient Profile
 ```
 
 If one operation succeeds while another fails, the application could potentially be left in an incomplete state.
 
 Database transactions should be considered where atomicity is required.
 
----
-
-## Production Security
+### Production Security
 
 Before production deployment, the following areas should be reviewed and strengthened:
 
@@ -888,7 +867,7 @@ Before production deployment, the following areas should be reviewed and strengt
 
 ---
 
-# Future Improvements
+## Future Improvements
 
 Potential future improvements include:
 
@@ -908,7 +887,7 @@ Potential future improvements include:
 
 ---
 
-# Learning Objectives
+## Learning Objectives
 
 This project was developed as a practical exercise in PHP and CodeIgniter 3.
 
@@ -938,41 +917,39 @@ A major objective is understanding how a feature moves through the complete appl
 
 ```text
 HTTP Request
-      |
-      v
+      │
+      ▼
 Route
-      |
-      v
+      │
+      ▼
 Controller
-      |
-      v
+      │
+      ▼
 Validation
-      |
-      v
+      │
+      ▼
 Business Logic
-      |
-      v
+      │
+      ▼
 Model
-      |
-      v
+      │
+      ▼
 Database
-      |
-      v
+      │
+      ▼
 Model
-      |
-      v
+      │
+      ▼
 Controller
-      |
-      v
+      │
+      ▼
 View / Response
 ```
 
 ---
 
-# License
+## License
 
 This project is licensed under the MIT License.
 
 See [`license.txt`](license.txt) for more information.
-
-```
