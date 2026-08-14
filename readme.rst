@@ -1,88 +1,61 @@
-🏥 Healthcare Management System (HMS)
+# Healthcare Management System
 
-A web-based **Healthcare Management System (HMS)** built with the **CodeIgniter 3** PHP framework and **Bootstrap 5**. The portal facilitates seamless coordination between **Patients**, **Doctors**, and **Administrators** by managing patient records, doctor specializations, appointment scheduling, and digital prescriptions with Role-Based Access Control (RBAC).
+A web-based Healthcare Management System built using PHP and CodeIgniter 3. The application provides role-based functionality for administrators, doctors, and patients, including authentication, role-specific onboarding, doctor/patient management, and appointment scheduling.
 
----
-
- 🚀 Key Features
-
-👤 Role-Based Access Control (RBAC)
-* **Administrator (Role 1):** Full oversight over system records, doctor directories, patient profiles, and appointment logs.
-* **Doctor (Role 2):** Manage patient visits, view personal daily consultation queues, and update diagnoses and digital prescriptions.
-* **Patient (Role 3):** Browse specialized doctors, schedule consultation slots, track appointment history, and update personal profile details.
+> **Project Status:** Learning / Development Project
 
 ---
 
-📦 Key Modules
+## Table of Contents
 
-* **🔐 Authentication & Security:**
-  * Secure user registration and authentication with BCrypt password hashing (`password_hash()`).
-  * Role-specific navigation, authentication checks on controller constructors, and session management.
-
-* **🩺 Doctor Management:**
-  * Directory listing with search functionality and specialization filtering.
-  * Multi-table database transactions keeping user credentials and doctor profiles in sync.
-
-* **📑 Patient Management:**
-  * Centralized directory for patient records, contact details, date of birth, gender, and clinical notes.
-
-* **📅 Appointments Module:**
-  * Interactive appointment booking workflow with preferred date and time selection.
-  * Status transition tracking (*Pending*, *Completed*, *Cancelled*).
-  * Clinical outcome tracking including doctor diagnoses and prescription notes.
-
-* **⚙️ Profile Settings:**
-  * Dynamic top navigation bar with user avatar, name, role badge, and quick-access dropdown.
-  * Profile customization for personal info, role-specific attributes, and password updates.
-
----
-
- 🛠️ Tech Stack
-
-| Layer | Technology |
-| :--- | :--- |
-| **Backend Framework** | PHP 7.4+ / CodeIgniter 3 |
-| **Database** | MySQL 5.7+ / MariaDB |
-| **Frontend Framework** | HTML5, CSS3, JavaScript (ES6 / Fetch API) |
-| **UI Components & Icons** | Bootstrap 5.3, Bootstrap Icons 1.11 |
+- [Overview](#overview)
+- [Features](#features)
+- [User Roles](#user-roles)
+- [Technology Stack](#technology-stack)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Authentication Flow](#authentication-flow)
+- [Registration and Onboarding Flow](#registration-and-onboarding-flow)
+- [Appointment Flow](#appointment-flow)
+- [Database Design](#database-design)
+- [Request Lifecycle](#request-lifecycle)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Application](#running-the-application)
+- [Security](#security)
+- [Known Limitations](#known-limitations)
+- [Future Improvements](#future-improvements)
+- [Learning Objectives](#learning-objectives)
+- [License](#license)
 
 ---
 
-📂 Database Schema Overview
+## Overview
 
-The system operates on four main relational tables:
+The Healthcare Management System is a role-based web application designed to manage basic healthcare workflows between patients, doctors, and administrators.
+
+The application is built using the **Model-View-Controller (MVC)** architecture provided by CodeIgniter 3.
+
+The major application areas are:
+
+- User authentication
+- User registration
+- Role-specific onboarding
+- Doctor management
+- Patient management
+- Appointment scheduling
+- Dashboard functionality
+- Profile management
+
+At a high level, the application follows this structure:
 
 ```text
-├── users
-│   ├── id (INT, PRIMARY KEY, AUTO_INCREMENT)
-│   ├── name (VARCHAR)
-│   ├── email (VARCHAR, UNIQUE)
-│   ├── password (VARCHAR)
-│   ├── role_id (INT) [1: Admin, 2: Doctor, 3: Patient]
-│   └── created_at (TIMESTAMP)
-│
-├── doctors
-│   ├── id (INT, PRIMARY KEY, AUTO_INCREMENT)
-│   ├── user_id (INT, FOREIGN KEY -> users.id)
-│   ├── specialization (VARCHAR)
-│   ├── consultation_fee (DECIMAL)
-│   └── phone (VARCHAR)
-│
-├── patients
-│   ├── id (INT, PRIMARY KEY, AUTO_INCREMENT)
-│   ├── user_id (INT, FOREIGN KEY -> users.id)
-│   ├── phone (VARCHAR)
-│   ├── dob (DATE)
-│   ├── gender (ENUM: 'Male', 'Female', 'Other')
-│   └── address (TEXT)
-│
-└── appointments
-    ├── id (INT, PRIMARY KEY, AUTO_INCREMENT)
-    ├── patient_id (INT, FOREIGN KEY -> patients.id)
-    ├── doctor_id (INT, FOREIGN KEY -> doctors.id)
-    ├── appointment_date (DATE)
-    ├── appointment_time (TIME)
-    ├── status (ENUM: 'Pending', 'Completed', 'Cancelled')
-    ├── diagnosis (TEXT)
-    ├── prescription (TEXT)
-    └── created_at (TIMESTAMP)
+                    Healthcare Management System
+                               |
+             +-----------------+-----------------+
+             |                 |                 |
+       Authentication      Doctor Module    Patient Module
+             |                 |                 |
+             +-----------------+-----------------+
+                               |
+                        Appointment Module
