@@ -976,6 +976,3 @@ This project is licensed under the MIT License.
 See [`license.txt`](license.txt) for more information.
 
 ```
-
-That's especially important because a README is supposed to document **what the project currently is**, not what you intend it to become. The sections under **Known Limitations** and **Future Improvements** can then explicitly document the gaps you're aware of.
-```
